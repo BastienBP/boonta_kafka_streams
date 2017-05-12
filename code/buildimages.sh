@@ -73,6 +73,10 @@ build_and_push()
             build_jar "$BOONTADATA_HOME/code/flink/master/code/target/flink1-0.2.jar" "$BOONTADATA_HOME/code/flink/master/code" "mvn clean package"
             ;;
 
+        "/boontadata/kafkastreams")
+                build_jar "$BOONTADATA_HOME/code/kafkastream/code/boontadata-streams/target/boontadata-streams-1.0-SNAPSHOT-jar-with-dependencies.jar" "$BOONTADATA_HOME/code/kafkastream/code/boontadata-streams" "mvn clean package"
+                ;;
+
 
         "$BOONTADATA_DOCKER_REGISTRY/boontadata/sparkmaster")
             build_jar "$BOONTADATA_HOME/code/spark/master/code/target/scala-2.11/boontadata-spark-job1-assembly-0.1.jar" "$BOONTADATA_HOME/code/spark/master/code" "sbt clean assembly"
@@ -119,10 +123,9 @@ build_and_push $BOONTADATA_HOME/code/spark/base
 build_and_push $BOONTADATA_HOME/code/spark/master
 build_and_push $BOONTADATA_HOME/code/spark/worker
 build_and_push $BOONTADATA_HOME/code/zookeeper
-#create image for jar
-docker build -t kafkastreams $BOONTADATA_HOME/boontadata-streams/code/kafkastream
-# create the jar for kafkastreams
-docker run -it -v $BOONTADATA_HOME/boontadata-streams/code/kafkastream/code/boontadata-streams:/myProject kafkastreams
+#create jar
+
+
 
 
 docker images
