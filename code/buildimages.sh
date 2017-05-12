@@ -120,9 +120,9 @@ build_and_push $BOONTADATA_HOME/code/spark/master
 build_and_push $BOONTADATA_HOME/code/spark/worker
 build_and_push $BOONTADATA_HOME/code/zookeeper
 #create image for jar
-docker build -t kafkastreams /boontadata-streams/code/kafkastream
+docker build -t kafkastreams $BOONTADATA_HOME/boontadata-streams/code/kafkastream
 # create the jar for kafkastreams
-docker run -it -v /boontadata-streams/code/kafkastream/code/boontadata-streams:/myProject kafkastreams
+docker run -it -v $BOONTADATA_HOME/boontadata-streams/code/kafkastream/code/boontadata-streams:/myProject kafkastreams
 
 
 docker images
