@@ -7,7 +7,7 @@ if test -z $BOONTADATA_DOCKER_REGISTRY
 then
     echo BOONTADATA_DOCKER_REGISTRY variable must not be null or empty
     echo you also need to login with `docker login`
-    echo NB: no need to login and no push if you use boontadata.local as the value of $BOONTADATA_DOCKER_REGISTRY 
+    echo NB: no need to login and no push if you use boontadata.local as the value of $BOONTADATA_DOCKER_REGISTRY
     return 1
 fi
 
@@ -51,6 +51,7 @@ build_jar()
     fi
 }
 
+
 build_and_push()
 {
     folderpath=$1
@@ -71,6 +72,8 @@ build_and_push()
         "$BOONTADATA_DOCKER_REGISTRY/boontadata/flinkmaster")
             build_jar "$BOONTADATA_HOME/code/flink/master/code/target/flink1-0.2.jar" "$BOONTADATA_HOME/code/flink/master/code" "mvn clean package"
             ;;
+
+
         "$BOONTADATA_DOCKER_REGISTRY/boontadata/sparkmaster")
             build_jar "$BOONTADATA_HOME/code/spark/master/code/target/scala-2.11/boontadata-spark-job1-assembly-0.1.jar" "$BOONTADATA_HOME/code/spark/master/code" "sbt clean assembly"
             ;;
@@ -91,12 +94,12 @@ build_and_push()
         docker build -t $fulltag $folderpath --file $filepath2
         echo "local docker images for $tagname:"
         docker images | grep "$tagname"
-        if test $BOONTADATA_DOCKER_REGISTRY = "boontadata.local" 
-        then 
-            echo "don't push to boontadata.local" 
-        else 
-            docker push $fulltag 
-        fi 
+        if test $BOONTADATA_DOCKER_REGISTRY = "boontadata.local"
+        then
+            echo "don't push to boontadata.local"
+        else
+            docker push $fulltag
+        fi
     fi
 }
 
@@ -116,5 +119,10 @@ build_and_push $BOONTADATA_HOME/code/spark/base
 build_and_push $BOONTADATA_HOME/code/spark/master
 build_and_push $BOONTADATA_HOME/code/spark/worker
 build_and_push $BOONTADATA_HOME/code/zookeeper
+#create image for jar
+docker build -t kafkastreams /boontadata-streams/code/kafkastream
+# create the jar for kafkastreams
+docker run -it -v /boontadata-streams/code/kafkastream/code/boontadata-streams:/myProject kafkastreams
+
 
 docker images
