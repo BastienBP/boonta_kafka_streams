@@ -6,3 +6,8 @@ RUN echo "deb http://ftp.debian.org/debian testing main" >> /etc/apt/sources.lis
     apt-get install -y openjdk-8-jre-headless openjdk-8-jdk
 
 RUN apt-get install -y maven
+
+RUN mkdir /myProject
+WORKDIR /myProject
+
+CMD ["mvn", "package"]

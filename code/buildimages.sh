@@ -73,7 +73,7 @@ build_and_push()
             build_jar "$BOONTADATA_HOME/code/flink/master/code/target/flink1-0.2.jar" "$BOONTADATA_HOME/code/flink/master/code" "mvn clean package"
             ;;
 
-        "/boontadata/kafkastreams")
+        "$BOONTADATA_DOCKER_REGISTRY/boontadata/kafkastreams")
                 build_jar "$BOONTADATA_HOME/code/kafkastream/code/boontadata-streams/target/boontadata-streams-1.0-SNAPSHOT-jar-with-dependencies.jar" "$BOONTADATA_HOME/code/kafkastream/code/boontadata-streams" "mvn clean package"
                 ;;
 
@@ -123,6 +123,7 @@ build_and_push $BOONTADATA_HOME/code/spark/base
 build_and_push $BOONTADATA_HOME/code/spark/master
 build_and_push $BOONTADATA_HOME/code/spark/worker
 build_and_push $BOONTADATA_HOME/code/zookeeper
+build_and_push $BOONTADATA_HOME/code/kafkastream
 #create jar
 
 
